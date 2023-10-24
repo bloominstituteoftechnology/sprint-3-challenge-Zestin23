@@ -232,45 +232,42 @@
 
     class AntFarm {
       constructor(...ants){
-        this.ants = ants.map(name => ({ name, health: 100}))
-        
+        this.ants = ants.map(name => ({ name, health: 100}))                    
       }
       work(){
-        if (this.ants.length === 0){
+        if (this.ants.length === 0) {
           return "No ants here. Did you work them to death?"
         }
 
-        let remainingAnts = 0
+        let result = `${this.ants.length} ants starting work!`
+
         this.ants.forEach(ant => {
-          if (ant.health > 0){
-            ant.health -= 20
-            if (ant.health > 0){
-              remainingAnts++
-            }
+          ant.health -= 20;
+          if (ant.health <= 0) {
+            this.ants = this.ants.filter(a => a !== ant)
           }
         })
-
-        this.ants = this.ants.filter(ant => ant.health > 0)
-
-        if (remainingAnts === 0){
-          return "No ants here. Did you work them to death?"
-        } else {
-          return `${remainingAnts} ants starting work!`
-        } 
-        
+        return result
       }
       feed(name){
-        const targetedAnts = this.ants.filter(ant => ant.name === name)
+        const targetAnts = this.ants.filter(ant => ant.name === name)
 
-        if (targetedAnts.length === 0){
+        if (targetAnts.length === 0){
           return `${name} not found!`
         }
-        targetedAnts.forEach(ant => {
-          ant.health = Math.min(ant.health + 15)
+        targetAnts.forEach(ant => {
+          ant.health += 15
         })
         return "Yum!"
       }        
     }
+    const myAntFarm = new AntFarm('Jess');
+    console.log(myAntFarm.work())
+    // console.log(myAntFarm.work())
+    // console.log(myAntFarm.work())
+    // console.log(myAntFarm.work())
+    // console.log(myAntFarm.work())
+    
 
     
 
